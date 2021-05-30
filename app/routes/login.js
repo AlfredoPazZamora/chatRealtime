@@ -2,6 +2,12 @@ let router = require('express').Router();
 let loginControlador = require('../controllers/loginController');
 let session = require("express-session");
 
+let sessionMiddleware = session({
+    secret: 'keyUltraSecret',
+    resave: true,
+    saveUninitialized: true
+});
+
 router.use(
     session({
       secret: "secret",

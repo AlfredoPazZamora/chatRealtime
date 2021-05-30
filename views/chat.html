@@ -6,12 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat</title>
     <link rel="stylesheet" href="/css/chat.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
+  <p class="bienvenido">Bienvenido, <b id="usernameTag"></b></p>
+  <p class="logout"><a id="exit" href="/">Salir del chat</a></p>
     <ul id="messages"></ul>
-    <form id="form" action="">
-      <input id="input" autocomplete="off" /><button>Send</button>
-    </form>
+    <div id="form">
+      <input class="input" id="mensaje" type="text" />
+      <input type="button" class="button" id="enviarMensaje" value="Send">
+    </div>
     <script src="/socket.io/socket.io.js"></script>
       <script src="js/chat.js">
         //  let socket = io()

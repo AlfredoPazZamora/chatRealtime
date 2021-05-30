@@ -13,13 +13,15 @@ module.exports = {
         if(usuario && pw){
             connection.query('SELECT * FROM usuarios WHERE usuario = ? AND pw = ?', [usuario, pw], 
             (error, results, fields) => {
+                // console.log(results[0].id);
                 if(results.length > 0){
                     req.session.loggedin = true;
                     req.session.usuario = usuario;
-
+                    req.session.usuarioId = results[0].id
+                    
                     res.redirect('/home');
                 }else{
-                    res.send('Usuario y contraseña incorrectos <br><br> si no tienes una cuenta puedes <a href="/registro">registrarte aquí</a>');
+                    res.send('Usuario y/o contraseña incorrectos <br><br> si no tienes una cuenta puedes <a href="/registro">registrarte aquí</a>');
                 }
                 res.end();
             });
@@ -31,7 +33,7 @@ module.exports = {
 
     home: (req, res) => {
         if(req.session.loggedin){
-            res.render('chat', {usuario: req.session.usuario});
+            res.render('chat');
         }else{
             res.send('Iniciar sesion de nuevo, gracias');
         }

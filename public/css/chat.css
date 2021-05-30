@@ -17,17 +17,17 @@ body {
   box-sizing: border-box;
   backdrop-filter: blur(10px);
 }
-#input {
+.input {
   border: none;
   padding: 0 1rem;
   flex-grow: 1;
   border-radius: 2rem;
   margin: 0.25rem;
 }
-#input:focus {
+.input:focus {
   outline: none;
 }
-#form > button {
+#form > .button {
   background: #333;
   border: none;
   padding: 0 1rem;
