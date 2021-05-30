@@ -2,12 +2,6 @@ let router = require('express').Router();
 let loginControlador = require('../controllers/loginController');
 let session = require("express-session");
 
-let sessionMiddleware = session({
-    secret: 'keyUltraSecret',
-    resave: true,
-    saveUninitialized: true
-});
-
 router.use(
     session({
       secret: "secret",
@@ -28,6 +22,10 @@ router.get('/home', (req, res) => {
 //POST
 router.post('/auth', (req, res) => {
     loginControlador.auth(req, res);
+})
+
+router.post('/register', (req, res) => {
+    loginControlador.registrar(req, res);
 })
 
 module.exports = router;
