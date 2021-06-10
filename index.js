@@ -41,10 +41,13 @@ app.set('view engine', 'html');
 //seccion de chat
 io.on('connection', (socket)=> {
     let req =  socket.request;
-    console.log(req.session);
+    // console.log(req.session);
+    
+    let roomId = 0;
 
-    let { usuario, usuarioId } = req.session;
-
+    let { usuario, usuarioId, roomName } = req.session;
+    socket.join(roomName);
+    botTxt('entroSala');
     if(usuarioId != null){
         connection.query('SELECT * FROM usuarios where  id= ?', [usuarioId],
         (errors, results, fields) => {
@@ -53,32 +56,39 @@ io.on('connection', (socket)=> {
         });
     }else{
         console.log('No se ha iniciado session');
-    }
-
-    // socket.join(req.session.roomName)
+    } 
 
     socket.on('mjsNuevo', (data) => {
-        console.log(data);
-        const sala = 0;
-
-
-        connection.query('INSERT INTO mensajes( mensaje , user_id, sala_id, fecha ) VALUES (?,?,?,CURDATE()) ', [data, usuarioId, sala],
-        (error, results, fields) => {
-            if(!error){
-                console.log(results);
-                console.log('Mensaje agregado correctamente');
-
-                socket.broadcast.emit('mensaje', {
-                    usuario: usuario,
-                    mensaje: data
+        //console.log(data);
+        // const sala = 0;
+        connection.query('SELECT * FROM salas where nombre_sala = ?', [roomName],(err, result, field) => {
+            if(!err){
+                let sala = result[0].id;
+                connection.query('INSERT INTO mensajes( mensaje , user_id, sala_id, fecha ) VALUES (?,?,?,CURDATE()) ', [data, usuarioId, sala],
+                (error, results, fields) => {
+                    if(!error){
+                        //console.log(results);
+                        console.log('Mensaje agregado correctamente');
+        
+                        socket.broadcast.to(roomName).emit('mensaje', {
+                            usuario: usuario,
+                            mensaje: data,
+                            roomId: roomId
+                        });
+        
+                        socket.emit('mensaje', {
+                            usuario: usuario,
+                            mensaje: data,
+                            roomId: roomId
+                        });
+                    }
                 });
-
-                socket.emit('mensaje', {
-                    usuario: usuario,
-                    mensaje: data
-                });
+            }else{
+                console.log(err);
             }
-        });
+            
+        })
+
     });
 
     socket.on('getSalas', (data) => {
@@ -89,10 +99,48 @@ io.on('connection', (socket)=> {
         });
     })
 
+    socket.on('cambioSala', (data) => {
+        const idSala = data.idSala;
+        let nombreSala = data.nombreSala;
+
+        socket.leave(roomName);
+
+        roomId = idSala;
+        roomName = nombreSala;
+
+        socket.join(roomName),
+        botTxt('cambioSala');
+    })
+
     socket.on('salir', (requ, res) => {
+        
+        botTxt('seFue')
         req.session.destroy();
     });
     
+    function botTxt(data){
+        entroSala = `Bienvenido a la sala ${roomName}`;
+        cambioSala = `Cambiaste a la sala ${roomName}`;
+        seFue = `El usuario ${usuario} ha salido de la sala`;  
+
+        if(data == "entroSala"){
+            socket.emit('mensaje',{
+                usuario: nameBot,
+                mensaje: entroSala
+            })
+        }else if(data == 'cambioSala'){
+            socket.emit('mensaje',{
+                usuario: nameBot,
+                mensaje: cambioSala
+            })
+        }else{
+            socket.emit('mensaje',{
+                usuario: nameBot,
+                mensaje: seFue 
+            })
+        }
+    }
+
 });
 
 
