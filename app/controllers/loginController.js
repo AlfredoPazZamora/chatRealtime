@@ -9,7 +9,7 @@ module.exports = {
     auth: (req, res) => {
         let usuario  = req.body.usuario;
         let pw       = req.body.pw;
-        let roomId     = req.body.room;
+        let room     = req.body.room;
 
         console.log(req.body);
 
@@ -20,9 +20,9 @@ module.exports = {
                 if(results.length > 0){
                     req.session.loggedin = true;
                     req.session.usuario = usuario;
-                    req.session.usuarioId = results[0].id
-                    req.session.room = roomId
-                    console.log(results)
+                    req.session.usuarioId = results[0].id;
+                    req.session.rooms = room;
+                    // console.log(results)
                     
                     res.redirect('/home');
                 }else{
@@ -39,6 +39,7 @@ module.exports = {
     home: (req, res) => {
         if(req.session.loggedin){
             res.render('chat');
+            // console.log(req.session)
         }else{
             res.send('Iniciar sesion de nuevo, gracias');
         }

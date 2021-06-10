@@ -9,7 +9,6 @@ let connection = require('./db/mysql');
 let cookieParser = require('cookie-parser')
 let session = require("express-session");
 
-let rootName = '';
 const nameBot = 'BotChat';
 
 let sessionMiddleware = session({
@@ -28,8 +27,6 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-
-
 //Modulo para poder renderizar html
 let engines = require('consolidate');
 let routes = require('./app/routes');
@@ -44,7 +41,7 @@ app.set('view engine', 'html');
 //seccion de chat
 io.on('connection', (socket)=> {
     let req =  socket.request;
-    // console.log(req.session);
+    console.log(req.session);
 
     let { usuario, usuarioId } = req.session;
 
@@ -57,6 +54,8 @@ io.on('connection', (socket)=> {
     }else{
         console.log('No se ha iniciado session');
     }
+
+    // socket.join(req.session.roomName)
 
     socket.on('mjsNuevo', (data) => {
         console.log(data);
