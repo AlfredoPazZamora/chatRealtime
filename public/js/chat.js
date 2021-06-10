@@ -1,7 +1,16 @@
-let socket = io('http://localhost:3000');
 
 $(document).ready(function(){
+    let socket = io('http://localhost:3000');
+    let salas = [];
     
+    socket.emit('getSalas');
+
+    socket.on('salas', (data) => {
+        $.each(data, (id, val) => {
+            salas.push(data[id].nombre_sala);
+        });
+        getSalas(salas);
+    })
 
     socket.on('logged_in', (data) => {
         $('#usernameTag').append(data.usuario);

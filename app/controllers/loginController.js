@@ -8,7 +8,10 @@ module.exports = {
 
     auth: (req, res) => {
         let usuario  = req.body.usuario;
-        let pw       = req.body.pw
+        let pw       = req.body.pw;
+        let roomId     = req.body.room;
+
+        console.log(req.body);
 
         if(usuario && pw){
             connection.query('SELECT * FROM usuarios WHERE usuario = ? AND pw = ?', [usuario, pw], 
@@ -18,6 +21,8 @@ module.exports = {
                     req.session.loggedin = true;
                     req.session.usuario = usuario;
                     req.session.usuarioId = results[0].id
+                    req.session.room = roomId
+                    console.log(results)
                     
                     res.redirect('/home');
                 }else{

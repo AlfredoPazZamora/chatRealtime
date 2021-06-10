@@ -60,13 +60,19 @@
           />
           <label for="floatingPassword">Contraseña</label>
         </div>
+        <div class="form-floating">
+          <select class="form-select  form-control" id="rooms" name="rooms">
+            <option value="null" selected>Selecciona una sala</option>
+          </select>
+        </div>
 
         <!-- <div class="btn-group" role="group" aria-label="Basic outlined example">
           <button type="submit" class="btn btn-outline-primary">Entrar</button>
           <a  class="btn btn-outline-primary" href="./registro.html">Registrarse</a>
           
         </div> -->
-        <button class="w-100 btn btn-lg btn-primary" type="submit">
+        <br>
+        <button class="w-100 btn btn-lg btn-primary" id="login" type="submit">
           Entrar
         </button>
         <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
@@ -74,7 +80,7 @@
     </main>
 
     <script src="/socket.io/socket.io.js"></script>
-      <script src="js/chat.js">
+      <script src="js/loginSalas.js">
         //  let socket = io()
       </script>
   </body>

@@ -9,6 +9,9 @@ let connection = require('./db/mysql');
 let cookieParser = require('cookie-parser')
 let session = require("express-session");
 
+let rootName = '';
+const nameBot = 'BotChat';
+
 let sessionMiddleware = session({
     secret: 'keyUltraSecret',
     resave: true,
@@ -78,6 +81,14 @@ io.on('connection', (socket)=> {
             }
         });
     });
+
+    socket.on('getSalas', (data) => {
+        connection.query('SELECT * FROM salas', (err, result, fields) => {
+            if(err) throw err
+            socket.emit('salas', result); 
+           
+        });
+    })
 
     socket.on('salir', (requ, res) => {
         req.session.destroy();
