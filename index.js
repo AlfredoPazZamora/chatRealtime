@@ -41,11 +41,13 @@ app.set('view engine', 'html');
 //seccion de chat
 io.on('connection', (socket)=> {
     let req =  socket.request;
-    // console.log(req.session);
+    // console.log(req.session); 
     
     let roomId = 0;
 
     let { usuario, usuarioId, roomName } = req.session;
+    console.log('Entre a ' + roomName);
+    historial(roomName);
     socket.join(roomName);
     botTxt('entroSala');
     if(usuarioId != null){
@@ -94,8 +96,7 @@ io.on('connection', (socket)=> {
     socket.on('getSalas', (data) => {
         connection.query('SELECT * FROM salas', (err, result, fields) => {
             if(err) throw err
-            socket.emit('salas', result); 
-           
+            socket.emit('salas', result);   
         });
     })
 
@@ -113,7 +114,7 @@ io.on('connection', (socket)=> {
     })
 
     socket.on('salir', (requ, res) => {
-        
+        socket.leave(roomName);
         botTxt('seFue')
         req.session.destroy();
     });
@@ -139,6 +140,32 @@ io.on('connection', (socket)=> {
                 mensaje: seFue 
             })
         }
+    }
+
+    function historial(data){
+        connection.query('SELECT * FROM salas where nombre_sala = ?',[data], (err, result, fields) => {
+        
+            //var resultArray = Object.values(JSON.parse(JSON.stringify(rows)))
+            let id = -1;
+            let resultArray = Object.values(JSON.parse(JSON.stringify(result)));
+            resultArray.forEach( v => id = v.id );
+            
+            console.log(id)
+
+            console.log(`Buscando historial de la sala ${data}`);
+
+            let sql =  `SELECT salas.nombre_sala, usuarios.usuario, mensajes.mensaje FROM mensajes 
+                        INNER JOIN salas ON salas.id = mensajes.sala_id 
+                        INNER JOIN usuarios ON usuarios.id = mensajes.user_id 
+                        WHERE salas.id = ${id} 
+                        ORDER BY mensajes.id ASC`;
+
+            connection.query(sql, (err, result, fields) => {
+                if(err) throw err
+                console.log(result);
+                socket.emit('mostrarHistorial', result);
+            })
+        });
     }
 
 });
