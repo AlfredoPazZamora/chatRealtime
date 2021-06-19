@@ -58,6 +58,19 @@ $(document).ready(function(){
         console.log('Cambio Select ID: ' + roomId + ' con nombre: ' + roomName);
     });
 
+    function historial(){
+        
+    }
+    socket.on('mostrarHistorial', (data) => {
+        let mensajes = '';
+        $.each(data, (id, val) => {
+            mensajes += `<li><small><b>${data[id]['usuario']}</b> ${data[id]['mensaje']}</small></li>` 
+        })
+
+        mensajes += `<li style="background: #fffff"><small><b>BotChat</b> Ultimos mensajes del historial de la sala</small></li>`
+        $('#messages').append(mensajes + '</br>');
+    })
+
     $('.logout').click(() => {
         socket.emit('salir')
     });
