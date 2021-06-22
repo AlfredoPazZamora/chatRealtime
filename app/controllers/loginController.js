@@ -26,13 +26,16 @@ module.exports = {
                     
                     res.redirect('/home');
                 }else{
+                    // res.render('InvalidData'); 
                     res.send('Usuario y/o contraseña incorrectos <br><br> si no tienes una cuenta puedes <a href="/registro">registrarte aquí</a>');
                 }
-                res.end();
+                res.end(); 
             });
         }else{
-            res.send('Favor de ingresar usuario y contraseña');
-            res.end();
+            // res.send('Favor de ingresar usuario y contraseña');
+            res.render('InvalidData');
+            //ventana();
+            //res.end();
         }
     },
 
