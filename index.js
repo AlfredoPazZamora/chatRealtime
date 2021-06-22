@@ -30,6 +30,7 @@ app.use(express.json());
 //Modulo para poder renderizar html
 let engines = require('consolidate');
 let routes = require('./app/routes');
+const { Socket } = require('dgram');
 app.use('/', routes)
 app.use(express.static(__dirname + '/public'));
 
@@ -47,9 +48,11 @@ io.on('connection', (socket)=> {
 
     let { usuario, usuarioId, roomName } = req.session;
     console.log('Entre a ' + roomName);
-    historial(roomName);
-    socket.join(roomName);
+    
+    socket.emit('historial');
+    socket.join(roomName);  
     botTxt('entroSala');
+    
     if(usuarioId != null){
         connection.query('SELECT * FROM usuarios where  id= ?', [usuarioId],
         (errors, results, fields) => {
@@ -59,6 +62,39 @@ io.on('connection', (socket)=> {
     }else{
         console.log('No se ha iniciado session');
     } 
+
+    // socket.on('historial', () => {
+    //     console.log('hola')
+    // })
+
+
+
+    socket.on('historial', ()=>{
+        console.log(`Buscando historial de la sala ${roomName}`);
+        connection.query('SELECT * FROM salas where nombre_sala = ?',[roomName], (err, result, fields) => {
+       
+            let id = -1;
+            let resultArray = Object.values(JSON.parse(JSON.stringify(result)));
+            resultArray.forEach( v => id = v.id );
+            
+            console.log(id)
+ 
+            console.log(`Buscando historial de la sala ${roomName}`);
+            // console.log(idSala);
+ 
+            let sql =  `SELECT salas.nombre_sala, usuarios.usuario, mensajes.mensaje FROM mensajes 
+                        INNER JOIN salas ON salas.id = mensajes.sala_id 
+                        INNER JOIN usuarios ON usuarios.id = mensajes.user_id 
+                        WHERE salas.id = ${id} 
+                        ORDER BY mensajes.id ASC`;
+ 
+            connection.query(sql, (err, result, fields) => {
+                if(err) throw err
+                // console.log(result);
+                socket.emit('mostrarHistorial', result);
+            })
+        })
+    });
 
     socket.on('mjsNuevo', (data) => {
         //console.log(data);
@@ -142,36 +178,10 @@ io.on('connection', (socket)=> {
         }
     }
 
-    function historial(data){
-        connection.query('SELECT * FROM salas where nombre_sala = ?',[data], (err, result, fields) => {
-        
-            //var resultArray = Object.values(JSON.parse(JSON.stringify(rows)))
-            let id = -1;
-            let resultArray = Object.values(JSON.parse(JSON.stringify(result)));
-            resultArray.forEach( v => id = v.id );
-            
-            console.log(id)
-
-            console.log(`Buscando historial de la sala ${data}`);
-
-            let sql =  `SELECT salas.nombre_sala, usuarios.usuario, mensajes.mensaje FROM mensajes 
-                        INNER JOIN salas ON salas.id = mensajes.sala_id 
-                        INNER JOIN usuarios ON usuarios.id = mensajes.user_id 
-                        WHERE salas.id = ${id} 
-                        ORDER BY mensajes.id ASC`;
-
-            connection.query(sql, (err, result, fields) => {
-                if(err) throw err
-                console.log(result);
-                socket.emit('mostrarHistorial', result);
-            })
-        });
-    }
-
-});
-
-
+    
+    
+})
 //Puerto escuchando
 server.listen(3000, (req, res) => {
     console.log('Escuchando por el puerto 3000');
-})
+});

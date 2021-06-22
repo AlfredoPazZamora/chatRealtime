@@ -5,7 +5,10 @@ $(document).ready(function(){
 
     socket.emit('getSalas');
 
+    socket.emit('historial');
+
     socket.on('salas', (data) => {
+        
         $.each(data, (id, val) => {
             $('#roomsCambio').append($('<option>', {
                 value: data[id].nombre_sala,
@@ -49,18 +52,16 @@ $(document).ready(function(){
         let roomId = room;
         roomName = $(this).find('option:selected').text();
         $('#messages').empty();
-        
+       
         socket.emit('cambioSala', {
             idSala: roomId,
             nombreSala: roomName
         })
 
         console.log('Cambio Select ID: ' + roomId + ' con nombre: ' + roomName);
+        socket.emit('historial');
     });
 
-    function historial(){
-        
-    }
     socket.on('mostrarHistorial', (data) => {
         let mensajes = '';
         $.each(data, (id, val) => {
