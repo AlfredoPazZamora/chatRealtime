@@ -20,6 +20,7 @@ $(document).ready(function(){
 
     socket.on('logged_in', (data) => {
         $('#usernameTag').append(data.usuario);
+        $('#roomTag').append(data.sala);
         //console.log(data);
     })
 

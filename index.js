@@ -57,7 +57,7 @@ io.on('connection', (socket)=> {
         connection.query('SELECT * FROM usuarios where  id= ?', [usuarioId],
         (errors, results, fields) => {
             console.log(`Sesion iniciada con el ID_usuario: ${usuarioId} y usuario ${usuario}`);
-            socket.emit('logged_in', {usuario: usuario});
+            socket.emit('logged_in', {usuario: usuario, sala: roomName});
         });
     }else{
         console.log('No se ha iniciado session');
