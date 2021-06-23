@@ -168,6 +168,7 @@ io.on('connection', (socket)=> {
     
 })
 //Puerto escuchando
-server.listen(3000, (req, res) => {
-    console.log('Escuchando por el puerto 3000');
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, (req, res) => {
+    console.log(`Escuchando por el puerto ${PORT}`);
 });
