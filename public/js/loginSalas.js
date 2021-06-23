@@ -3,7 +3,7 @@ $(document).ready(function(){
     
     socket.emit('getSalas');
 
-    socket.on('salas', (data) => {
+    socket.on('salas', (data) => { 
         $.each(data, (id, val) => {
             $('#rooms').append($('<option>', {
                 value: data[id].nombre_sala,
