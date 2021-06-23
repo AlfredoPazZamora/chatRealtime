@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index",
-    "dev": "node index"
+    "start": "node index"
   },
   "author": "Alfredo Paz Zamora",
   "license": "ISC",
