@@ -1,10 +1,11 @@
 let mysql = require('mysql');
+let config = require('../config');
 
 let connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'chat-sesion'
+    host: config.HOST,
+    user: config.USER,
+    password: config.PW,
+    database: config.DB
 });
 
 connection.connect(
