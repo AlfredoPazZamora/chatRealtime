@@ -26,20 +26,17 @@ module.exports = {
                     
                     res.redirect('/home');
                 }else{
-                    // res.render('InvalidData'); 
-                    res.send('Usuario y/o contraseña incorrectos <br><br> si no tienes una cuenta puedes <a href="/registro">registrarte aquí</a>');
+                    res.render('invalidData');
                 }
-                res.end(); 
             });
         }else{
-            res.render('InvalidData');
+            res.render('faltanDatos');
         }
     },
 
     home: (req, res) => {
         if(req.session.loggedin){
             res.render('chat');
-            // console.log(req.session)
         }else{
             res.send('Iniciar sesion de nuevo, gracias');
         }

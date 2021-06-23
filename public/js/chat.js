@@ -60,6 +60,8 @@ $(document).ready(function(){
         })
 
         console.log('Cambio Select ID: ' + roomId + ' con nombre: ' + roomName);
+        $('#roomTag').empty();
+        $('#roomTag').append(roomName);
         socket.emit('historial');
     });
 

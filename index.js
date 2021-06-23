@@ -42,7 +42,6 @@ app.set('view engine', 'html');
 //seccion de chat
 io.on('connection', (socket)=> {
     let req =  socket.request;
-    // console.log(req.session); 
     
     let roomId = 0;
 
@@ -63,12 +62,6 @@ io.on('connection', (socket)=> {
         console.log('No se ha iniciado session');
     } 
 
-    // socket.on('historial', () => {
-    //     console.log('hola')
-    // })
-
-
-
     socket.on('historial', ()=>{
         console.log(`Buscando historial de la sala ${roomName}`);
         connection.query('SELECT * FROM salas where nombre_sala = ?',[roomName], (err, result, fields) => {
@@ -80,7 +73,6 @@ io.on('connection', (socket)=> {
             console.log(id)
  
             console.log(`Buscando historial de la sala ${roomName}`);
-            // console.log(idSala);
  
             let sql =  `SELECT salas.nombre_sala, usuarios.usuario, mensajes.mensaje FROM mensajes 
                         INNER JOIN salas ON salas.id = mensajes.sala_id 
@@ -90,22 +82,18 @@ io.on('connection', (socket)=> {
  
             connection.query(sql, (err, result, fields) => {
                 if(err) throw err
-                // console.log(result);
                 socket.emit('mostrarHistorial', result);
             })
         })
     });
 
     socket.on('mjsNuevo', (data) => {
-        //console.log(data);
-        // const sala = 0;
         connection.query('SELECT * FROM salas where nombre_sala = ?', [roomName],(err, result, field) => {
             if(!err){
                 let sala = result[0].id;
                 connection.query('INSERT INTO mensajes( mensaje , user_id, sala_id, fecha ) VALUES (?,?,?,CURDATE()) ', [data, usuarioId, sala],
                 (error, results, fields) => {
                     if(!error){
-                        //console.log(results);
                         console.log('Mensaje agregado correctamente');
         
                         socket.broadcast.to(roomName).emit('mensaje', {
@@ -177,8 +165,6 @@ io.on('connection', (socket)=> {
             })
         }
     }
-
-    
     
 })
 //Puerto escuchando
