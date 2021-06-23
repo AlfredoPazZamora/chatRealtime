@@ -1,6 +1,6 @@
 
 $(document).ready(function(){
-    let socket = io('http://localhost:3000');
+    let socket = io();
     let room = 0;
 
     socket.emit('getSalas');

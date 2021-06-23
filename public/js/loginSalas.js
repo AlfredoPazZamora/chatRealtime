@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    let socket = io('http://localhost:3000');
+    let socket = io();
     
     socket.emit('getSalas');
 
