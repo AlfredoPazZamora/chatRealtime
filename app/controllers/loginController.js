@@ -13,7 +13,7 @@ module.exports = {
 
         //console.log(req);
 
-        if(usuario && pw){
+        if(usuario && pw && room){
             connection.query('SELECT * FROM usuarios WHERE usuario = ? AND pw = ?', [usuario, pw], 
             (error, results, fields) => {
                 // console.log(results[0].id);
