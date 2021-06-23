@@ -32,10 +32,7 @@ module.exports = {
                 res.end(); 
             });
         }else{
-            // res.send('Favor de ingresar usuario y contraseña');
             res.render('InvalidData');
-            //ventana();
-            //res.end();
         }
     },
 

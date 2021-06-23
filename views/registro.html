@@ -9,93 +9,66 @@
       content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
     />
     <meta name="generator" content="Hugo 0.83.1" />
-    <title>chat - login</title>
+    <title>chat - Registro</title>
 
-    <link
-      rel="canonical"
-      href="https://getbootstrap.com/docs/5.0/examples/sign-in/"
-    />
-
-    <!-- Bootstrap core CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
-      crossorigin="anonymous"
-    />
-
-    <!-- Favicons -->
-
-    <meta name="theme-color" content="#7952b3" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <style>
-      html,
-      body {
-        height: 100%;
+      .centro{
+        height: 100vh;
       }
 
-      body {
-        display: flex;
-        align-items: center;
-        padding-top: 40px;
-        padding-bottom: 40px;
-        background-color: #f5f5f5;
-      }
-
-      .form-signin {
-        width: 100%;
-        max-width: 330px;
-        padding: 15px;
-        margin: auto;
-      }
-
-      .form-signin .checkbox {
-        font-weight: 400;
-      }
-
-      .form-signin .form-floating:focus-within {
-        z-index: 2;
-      }
-
-      .form-signin input[type="email"] {
-        margin-bottom: -1px;
-        border-bottom-right-radius: 0;
-        border-bottom-left-radius: 0;
-      }
-
-      .form-signin input[type="password"] {
-        margin-bottom: 10px;
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
-      }
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
+      body{
+        overflow: hidden;
       }
     </style>
 
-    <!-- Custom styles for this template -->
-    <!-- <link href="login.css" rel="stylesheet" /> -->
   </head>
-  <body class="text-center">
-    <main class="form-signin">
+  <body>
+ 
+    <main class="row container">
+        
+      <div class="centro col s12 m12 l12 block valign-wrapper">
+
+        <div class="col s12 center">
+
+          <h4 class="purple-text text-darken-4">Registro</h4>
+          <div class="col s3"></div>
+          <form action="/register" method="POST" class="col s6">
+            <section class="row">
+              <article class="input-field col s12">
+                <input id="email" name="email" type="email" class="validate">
+                <label for="email">Correo</label>
+              </article>
+    
+              <article class="input-field col s6">
+                <input id="usuario" name="usuario" type="text" class="validate">
+                <label for="usuario">Usuario</label>
+              </article>
+    
+              <article class="input-field col s6">
+                <input id="pw" name="pw" type="password" class="validate">
+                <label for="pw">Contraseña</label>
+              </article>
+    
+              <button class="btn-large waves-effect waves-light purple lighten-1" type="submit" name="action">Enviar
+                <i class="material-icons right ">send</i>
+              </button>
+    
+            </section>
+          </form>
+          <div class="col s3"></div>
+
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- <main class="form-signin">
       <form action="/register" method="POST">
-        <img
-          class="mb-4"
-          src="/docs/5.0/assets/brand/bootstrap-logo.svg"
-          alt=""
-          width="72"
-          height="57"
-        />
+        
         <h1 class="h3 mb-3 fw-normal">Registro</h1>
         <div class="form-floating">
             <input
@@ -126,16 +99,19 @@
             placeholder="Password"
           />
           <label for="floatingPassword">Password</label>
-        </div>
+        </div> -->
 
         <!-- <div class="btn-group" role="group" aria-label="Basic outlined example">
           <a  class="btn btn-outline-primary">Registrarse</a>
         </div> -->
-        <button class="w-100 btn btn-lg btn-primary" type="submit">
+        <!-- <button class="w-100 btn btn-lg btn-primary" type="submit">
           Registrarse
         </button>
         <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
       </form>
-    </main>
+    </main> -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
   </body>
 </html>
