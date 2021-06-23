@@ -38,7 +38,7 @@ module.exports = {
         if(req.session.loggedin){
             res.render('chat');
         }else{
-            res.send('Iniciar sesion de nuevo, gracias');
+            res.render('iniciarSesionNuevamente');
         }
     },
     
@@ -69,7 +69,7 @@ module.exports = {
                                 <br><br> 
                                 <a href='/registro'>Volver a registro</a>
                                 <br><br>
-                                <a href='/'>Volver a inicar sesion</a>
+                                <a href='/'>Volver a inicar sesion</a> 
                             `);
                         }else{
                             if(emailsDB[i] == email){
