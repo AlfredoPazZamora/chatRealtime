@@ -6,6 +6,10 @@ let connection = mysql.createConnection({
     user: 'be6e7059cd1c8a',
     password: '94db54d6',
     database: 'heroku_08b9a5b304298d8'
+    // host: 'localhost',
+    // user: 'root',
+    // password: '',
+    // database: 'chat-sesion'
 });
 
 connection.connect(

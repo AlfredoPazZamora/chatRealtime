@@ -11,9 +11,9 @@ module.exports = {
         let pw       = req.body.pw;
         let room     = req.body.rooms;
 
-        //console.log(req);
+        console.log('-------------------2' + typeof room);
 
-        if(usuario && pw && room){
+        if((usuario && pw) && room != 'null' ){
             connection.query('SELECT * FROM usuarios WHERE usuario = ? AND pw = ?', [usuario, pw], 
             (error, results, fields) => {
                 // console.log(results[0].id);
