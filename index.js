@@ -9,8 +9,6 @@ let connection = require('./db/mysql');
 let cookieParser = require('cookie-parser')
 let session = require("express-session");
 
-const nameBot = 'BotChat';
-
 let sessionMiddleware = session({
     secret: 'keyUltraSecret',
     resave: true,
@@ -40,6 +38,7 @@ app.engine('html', engines.mustache);
 app.set('view engine', 'html');
 
 //seccion de chat
+const nameBot = 'BotChat';
 io.on('connection', (socket)=> {
     let req =  socket.request;
     
