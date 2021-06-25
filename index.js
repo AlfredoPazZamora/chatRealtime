@@ -28,7 +28,6 @@ app.use(express.json());
 //Modulo para poder renderizar html
 let engines = require('consolidate');
 let routes = require('./app/routes');
-const { Socket } = require('dgram');
 app.use('/', routes)
 app.use(express.static(__dirname + '/public'));
 

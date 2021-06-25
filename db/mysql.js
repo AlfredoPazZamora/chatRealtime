@@ -1,5 +1,4 @@
 let mysql = require('mysql');
-// let config = require('../config');
 
 let connection = mysql.createConnection({
     host: 'us-cdbr-east-04.cleardb.com',
@@ -24,3 +23,4 @@ connection.connect(
 );
 
 module.exports = connection;
+
